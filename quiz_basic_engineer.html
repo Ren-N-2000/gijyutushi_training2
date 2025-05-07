@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>技術者基礎 - クイズ</title>
+  <style>
+    body { font-family: sans-serif; padding: 30px; max-width: 800px; margin: auto; }
+    h1 { text-align: center; }
+    .question { font-size: 20px; margin-top: 30px; }
+    .choices { margin: 15px 0; }
+    .choices button {
+      display: block;
+      margin: 10px 0;
+      padding: 10px;
+      width: 100%;
+      font-size: 18px;
+    }
+    .result { font-weight: bold; margin-top: 20px; }
+  </style>
+</head>
+<body>
+
+<h1>技術士トレーニング - 基礎科目</h1>
+<div id="quiz-container">
+  <p class="question" id="question">読み込み中...</p>
+  <div class="choices" id="choices"></div>
+  <p class="result" id="result"></p>
+</div>
+
+<script>
+  const questions = [
+    {
+      question: `障害を持つ人々があらゆる分野で差別を受けないようにするためや不便さを取り除くため、自身も車椅子を利用する障害者であったロナルド・メイスが、それまでのバリアフリーなどの概念に代わって提唱したのがユニバーサルデザインである。
+ユニバーサルデザインの7つの原則は、
+(1) 公平な利用, (2) 利用における ア, (3) 直感的な利用, (4) 認知できる情報, (5) 失敗に対する イ, (6) 少ない ウ, (7) 接近や利用のためのサイズと空間である。`,
+      choices: [
+        "① ア：柔軟性　イ：単純　ウ：寛大　エ：身体的",
+        "② ア：限定性　イ：単純　ウ：厳格　エ：精神的",
+        "③ ア：柔軟性　イ：単純　ウ：厳格　エ：身体的",
+        "④ ア：限定性　イ：複雑　ウ：厳格　エ：身体的",
+        "⑤ ア：柔軟性　イ：複雑　ウ：寛大　エ：精神的"
+      ],
+      answer: "① ア：柔軟性　イ：単純　ウ：寛大　エ：身体的"
+    },
+    {
+      question: `限界状態設計法は構造物に生じてはならない限界状態を設定し、その状態の発生に対する安全性を個々に照査するものである。限界状態は一般的に大きく分けて、終局限界状態、使用限界状態、疲労限界状態に分類できる。
+限界状態に関する次の (ア) ～ (ウ) の記述について、それぞれを表している限界状態の組合せとして、最も適切なものはどれか。
+(ア) 通常の供用又は耐久性に関する限界状態である。
+(イ) 荷重が繰り返し作用することによって生じる限界状態である。
+(ウ) 最大耐力に対応する限界状態である。`,
+      choices: [
+        "① ア：使用限界状態　イ：終局限界状態　ウ：疲労限界状態",
+        "② ア：使用限界状態　イ：疲労限界状態　ウ：終局限界状態",
+        "③ ア：終局限界状態　イ：疲労限界状態　ウ：使用限界状態",
+        "④ ア：疲労限界状態　イ：使用限界状態　ウ：終局限界状態",
+        "⑤ ア：疲労限界状態　イ：終局限界状態　ウ：使用限界状態"
+      ],
+      answer: "② ア：使用限界状態　イ：疲労限界状態　ウ：終局限界状態"
+    },
+    {
+      question: `断面が円形の等分布荷重を受ける片持ばりにおいて、最大曲げ応力は断面の円の直径のアにイし、最大たわみは断面の円の直径のウにエする。`,
+      choices: [
+        "① ア：3乗　イ：反比例　ウ：4乗　エ：反比例",
+        "② ア：4乗　イ：反比例　ウ：4乗　エ：反比例",
+        "③ ア：4乗　イ：比例　ウ：3乗　エ：反比例",
+        "④ ア：4乗　イ：反比例　ウ：3乗　エ：比例",
+        "⑤ ア：3乗　イ：比例　ウ：4乗　エ：比例"
+      ],
+      answer: "① ア：3乗　イ：反比例　ウ：4乗　エ：反比例"
+    }
+  ];
+
+  let current = 0;
+
+  function loadQuestion() {
+    if (current >= questions.length) {
+      document.getElementById("question").textContent = "全問終了しました！お疲れさまでした。";
+      document.getElementById("choices").innerHTML = "";
+      return;
+    }
+
+    const q = questions[current];
+    document.getElementById("question").textContent = q.question;
+    const choicesDiv = document.getElementById("choices");
+    choicesDiv.innerHTML = "";
+
+    q.choices.forEach(choice => {
+      const btn = document.createElement("button");
+      btn.textContent = choice;
+      btn.onclick = () => checkAnswer(choice, q.answer);
+      choicesDiv.appendChild(btn);
+    });
+
+    document.getElementById("result").textContent = "";
+  }
+
+  function checkAnswer(selected, correct) {
+    const result = document.getElementById("result");
+    if (selected === correct) {
+      result.textContent = "✅ 正解です！";
+    } else {
+      result.textContent = `❌ 不正解です。正解は「${correct}」です。`;
+    }
+    current++;
+    setTimeout(loadQuestion, 2000);
+  }
+
+  loadQuestion();
+</script>
+
+</body>
+</html>

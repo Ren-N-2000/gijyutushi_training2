@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>技術者倫理 - クイズ</title>
+  <style>
+    body { font-family: sans-serif; padding: 30px; max-width: 900px; margin: auto; }
+    h1 { text-align: center; }
+    .question { font-size: 18px; white-space: pre-wrap; margin-top: 30px; }
+    .choices { margin: 15px 0; }
+    .choices button {
+      display: block;
+      margin: 10px 0;
+      padding: 10px;
+      width: 100%;
+      font-size: 16px;
+    }
+    .result { font-weight: bold; margin-top: 20px; }
+  </style>
+</head>
+<body>
+
+<h1>技術士トレーニング - 技術者倫理</h1>
+<div id="quiz-container">
+  <p class="question" id="question">読み込み中...</p>
+  <div class="choices" id="choices"></div>
+  <p class="result" id="result"></p>
+</div>
+
+<script>
+  const questions = [
+    {
+      question: `Ⅱ-1 技術士法第四章に関する語句補充問題
+次に掲げる技術士法第四章の内容において、ア～オに入る語句の組合せとして最も適切なものはどれか。
+
+（信用失墜行為の禁止）
+第44条 技術士又は技術士補は、技術士若しくは技術士補の信用を傷つけ、または技術士及び技術士補全体の不名誉となるような行為をしてはならない。
+
+（技術士等の秘密保持ア）
+第45条 技術士又は技術士補は、正当の理由がなく、その業務に関して知り得た秘密を漏らし、または盗用してはならない。技術士又は技術士補でなくなった後も同様とする。
+
+（技術士等のイ 確保のウ）
+第45条の2 技術士又は技術士補は、その業務を行うに当たっては、公共の安全、環境の保全その他のイを害することのないよう努めなければならない。
+
+（技術士の名称表示）
+第46条 技術士は、その業務に関して技術士の名称を表示するときは、その登録を受けたエを明示して行わなければならない。登録を受けていないエを表示してはならない。
+
+（技術士のオ 向上のウ）
+第47条の2 技術士は、常にその業務に関して有する知識及び技能の水準を向上させ、その他そのオの向上を図るよう努めなければならない。`,
+      choices: [
+        "① 責務／安全／義務／専門部門／能力",
+        "② 義務／安全／責務／技術部門／資質",
+        "③ 責務／安全／義務／技術部門／能力",
+        "④ 義務／公益／責務／技術部門／資質",
+        "⑤ 義務／公益／責務／専門部門／資質"
+      ],
+      answer: "④ 義務／公益／責務／技術部門／資質"
+    },
+    {
+      question: `Ⅱ-2 SDGsとジェンダー平等に関する記述穴埋め問題
+次の文に適切な語句を入れるとした場合、どれにも当てはまらないものはどれか。
+
+…女性と女児は、質の高い教育、経済的資源への公平なアクセス、また、あらゆるレベルでの政治参加、イにおいて男性と同等の機会を享受すべきである。
+…ジェンダー・ギャップを縮めるための投資を顕著に増加するとともに、…女性のウを推進する組織への支援を強化する…
+
+【選択肢】
+① 雇用　② リーダーシップ　③ 意思決定　④ エンパワーメント　⑤ ケア`,
+      answer: "⑤ ケア"
+    },
+    {
+      question: `Ⅱ-3 著作権に関する正誤判定問題
+以下の記述（ア～エ）について正しいものを○、誤っているものを×とし、最も適切な組合せを選べ。
+
+(ア) 公表された学術論文からの引用は、著作権者の承諾がある場合を除き、著作権侵害となる。
+(イ) 官公庁が作成・公表した資料は、特段の制限表示がなければ転載できる。
+(ウ) AI開発において学習用データの収集・提供は、著作権の制限対象となる。
+(エ) 美術品を複製してプリンタや用紙を開発する行為は、著作権の制限対象となる。
+
+【選択肢】
+① ア×／イ○／ウ○／エ○
+② ア○／イ×／ウ○／エ○
+③ ア○／イ○／ウ×／エ○
+④ ア○／イ○／ウ○／エ×
+⑤ ア○／イ○／ウ○／エ○`,
+      answer: "① ア×／イ○／ウ○／エ○"
+    },
+    {
+      question: `Ⅱ-4 ISO 26000に関する語句補充問題
+次の文のア～オに入る語句の組合せとして、最も適切なものはどれか。
+
+組織が社会的責任に取り組み、実践する際の包括的な目的はアに最大限貢献することである。
+この規格を適用する際には、イとの整合性を取りつつ、経済状況や社会・環境・法・文化・政治・組織のウを考慮することが望ましい。
+
+【選択肢】
+① 持続可能な発展／国際行動規範／多様性／透明性／人権の尊重
+② 公共の福祉の発展／自国の法規／多様性／機密情報の保護／公共の福祉
+③ 持続可能な発展／国際行動規範／独自性／透明性／人権の尊重
+④ 公共の福祉の発展／自国の法規／独自性／機密情報の保護／公共の福祉
+⑤ 持続可能な発展／国際行動規範／多様性／機密情報の保護／人権の尊重`,
+      answer: "① 持続可能な発展／国際行動規範／多様性／透明性／人権の尊重"
+    },
+    {
+      question: `Ⅱ-5 環境保全とIPCC報告に関する正誤判定問題
+(ア) カーボンニュートラルは、排出量を認識・削減し、困難な部分をカーボンクレジットで相殺する取り組みである。
+(イ) プラネタリー・バウンダリーは、人間が安全に活動できる地球の限界を示す。
+(ウ) トップランナー基準は、省エネ性能が最も高い既存製品以上の基準を設定する。
+(エ) カーボン・オフセットは、排出量を認識し、すべての活動範囲を対象に排出ゼロを目指すものである。
+
+【選択肢】
+① ア○／イ○／ウ○／エ○
+② ア×／イ○／ウ○／エ○
+③ ア○／イ×／ウ×／エ○
+④ ア○／イ○／ウ×／エ×
+⑤ ア×／イ○／ウ○／エ×`,
+      answer: "⑤ ア×／イ○／ウ○／エ×"
+    }
+  ];
+
+  let current = 0;
+
+  function loadQuestion() {
+    if (current >= questions.length) {
+      document.getElementById("question").textContent = "全問終了しました！お疲れさまでした。";
+      document.getElementById("choices").innerHTML = "";
+      return;
+    }
+
+    const q = questions[current];
+    document.getElementById("question").textContent = q.question;
+    const choicesDiv = document.getElementById("choices");
+    choicesDiv.innerHTML = "";
+
+    q.choices.forEach(choice => {
+      const btn = document.createElement("button");
+      btn.textContent = choice;
+      btn.onclick = () => checkAnswer(choice, q.answer);
+      choicesDiv.appendChild(btn);
+    });
+
+    document.getElementById("result").textContent = "";
+  }
+
+  function checkAnswer(selected, correct) {
+    const result = document.getElementById("result");
+    if (selected === correct) {
+      result.textContent = "✅ 正解です！";
+    } else {
+      result.textContent = `❌ 不正解です。正解は「${correct}」です。`;
+    }
+    current++;
+    setTimeout(loadQuestion, 2000);
+  }
+
+  loadQuestion();
+</script>
+
+</body>
+</html>
